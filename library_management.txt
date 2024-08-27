@@ -1,0 +1,223 @@
+create database librarymanagement;
+use librarymanagement;
+
+-- student table
+
+create table students (
+    studentid varchar(10) not null,
+    name varchar(100) not null,
+    email varchar(100) not null,
+    phone varchar(15),
+    department varchar(50),
+    primary key (studentid)
+);
+
+insert into students (studentid, name, email, phone, department) values
+('S1', 'John Doe', 'johndoe@example.com', '555-1234', 'Computer Science'),
+('S2', 'Jane Smith', 'janesmith@example.com', '555-5678', 'Electrical Engineering'),
+('S3', 'Alice Johnson', 'alicej@example.com', '555-8765', 'Mechanical Engineering'),
+('S4', 'Bob Brown', 'bobbrown@example.com', '555-4321', 'Civil Engineering'),
+('S5', 'Charlie Davis', 'charlied@example.com', '555-1122', 'Chemical Engineering'),
+('S6', 'Diana Evans', 'dianaevans@example.com', '555-3344', 'Mathematics'),
+('S7', 'Ethan Harris', 'ethanh@example.com', '555-5566', 'Physics'),
+('S8', 'Fiona White', 'fionaw@example.com', '555-7788', 'Biology'),
+('S9', 'George King', 'georgek@example.com', '555-9900', 'History'),
+('S10', 'Hannah Lee', 'hannahlee@example.com', '555-2211', 'Literature');
+
+select * from students;
+
+-- books table
+
+create table books (
+    bookid varchar(10) not null,
+    title varchar(100) not null,
+    author varchar(50) not null,
+    genre varchar(30) not null,
+    publishyear int not null,
+    primary key (bookid)
+);
+
+insert into books (bookid, title, author, genre, publishyear) values
+('B001', 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', 1960),
+('B002', '1984', 'George Orwell', 'Dystopian', 1949),
+('B003', 'Moby Dick', 'Herman Melville', 'Adventure', 1851),
+('B004', 'Pride and Prejudice', 'Jane Austen', 'Romance', 1813),
+('B005', 'War and Peace', 'Leo Tolstoy', 'Historical', 1869),
+('B006', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', 1925),
+('B007', 'Crime and Punishment', 'Fyodor Dostoevsky', 'Crime', 1866),
+('B008', 'The Catcher in the Rye', 'J.D. Salinger', 'Fiction', 1951),
+('B009', 'The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937),
+('B010', 'Jane Eyre', 'Charlotte Brontë', 'Romance', 1847);
+
+select * from books;
+
+-- members table
+
+create table members (
+    memberid varchar(10) not null,
+    name varchar(50) not null,
+    address varchar(100) not null,
+    phonenumber varchar(15) not null,
+    email varchar(50) not null,
+    primary key (memberid)
+);
+
+insert into members (memberid, name, address, phonenumber, email) values
+('M001', 'Alice Johnson', '123 Main St, Springfield', '123-456-7890', 'alice@example.com'),
+('M002', 'Bob Smith', '456 Elm St, Springfield', '234-567-8901', 'bob@example.com'),
+('M003', 'Charlie Brown', '789 Oak St, Springfield', '345-678-9012', 'charlie@example.com'),
+('M004', 'David Green', '101 Maple St, Springfield', '456-789-0123', 'david@example.com'),
+('M005', 'Eve White', '202 Pine St, Springfield', '567-890-1234', 'eve@example.com'),
+('M006', 'Frank Black', '303 Cedar St, Springfield', '678-901-2345', 'frank@example.com'),
+('M007', 'Grace Lee', '404 Birch St, Springfield', '789-012-3456', 'grace@example.com'),
+('M008', 'Hannah Blue', '505 Walnut St, Springfield', '890-123-4567', 'hannah@example.com'),
+('M009', 'Ian Brown', '606 Chestnut St, Springfield', '901-234-5678', 'ian@example.com'),
+('M010', 'Jack White', '707 Ash St, Springfield', '012-345-6789', 'jack@example.com');
+
+select * from members;
+
+-- borrowed books
+
+create table borrowedbooks (
+    borrowid varchar(10) not null,
+    bookid varchar(10) not null,
+    memberid varchar(10) not null,
+    borrowdate date not null,
+    returndate date,
+    primary key (borrowid),
+    foreign key (bookid) references books(bookid),
+    foreign key (memberid) references members(memberid)
+);
+
+insert into borrowedbooks (borrowid, bookid, memberid, borrowdate, returndate) values
+('BR001', 'B001', 'M001', '2024-01-05', '2024-01-15'),
+('BR002', 'B002', 'M002', '2024-01-06', '2024-01-16'),
+('BR003', 'B003', 'M003', '2024-01-07', '2024-01-17'),
+('BR004', 'B004', 'M004', '2024-01-08', '2024-01-18'),
+('BR005', 'B005', 'M005', '2024-01-09', '2024-01-19'),
+('BR006', 'B006', 'M006', '2024-01-10', '2024-01-20'),
+('BR007', 'B007', 'M007', '2024-01-11', '2024-01-21'),
+('BR008', 'B008', 'M008', '2024-01-12', '2024-01-22'),
+('BR009', 'B009', 'M009', '2024-01-13', '2024-01-23'),
+('BR010', 'B010', 'M010', '2024-01-14', '2024-01-24');
+
+select * from borrowedbooks;
+
+-- Staff table
+
+create table staff (
+    staffid varchar(10) not null,
+    name varchar(50) not null,
+    position varchar(30) not null,
+    hiredate date not null,
+    salary decimal(10, 2) not null,
+    primary key (staffid)
+);
+
+insert into staff (staffid, name, position, hiredate, salary) values
+('S001', 'John Williams', 'Librarian', '2020-01-01', 3500.00),
+('S002', 'Sarah Brown', 'Assistant Librarian', '2021-02-01', 3000.00),
+('S003', 'Michael Clark', 'Library Technician', '2022-03-01', 2800.00),
+('S004', 'Emily Davis', 'Cataloguer', '2020-04-01', 3200.00),
+('S005', 'James Harris', 'Archivist', '2021-05-01', 3100.00),
+('S006', 'Patricia Miller', 'Library Assistant', '2022-06-01', 2600.00),
+('S007', 'Robert Wilson', 'IT Support', '2020-07-01', 2900.00),
+('S008', 'Linda Moore', 'Circulation Clerk', '2021-08-01', 2700.00),
+('S009', 'David Taylor', 'Reference Librarian', '2022-09-01', 3300.00),
+('S010', 'Barbara Anderson', 'Shelver', '2020-10-01', 2400.00);
+
+select * from staff;
+
+-- publishers table
+
+create table publishers (
+    publisherid varchar(10) not null,
+    name varchar(50) not null,
+    address varchar(100)  not null,
+    phonenumber varchar(15) not null,
+    email varchar(50) not null,
+    primary key (publisherid)
+);
+
+insert into publishers (publisherid, name, address, phonenumber, email) values
+('P001', 'Penguin Random House', '1745 Broadway, New York', '212-782-9000', 'info@penguinrandomhouse.com'),
+('P002', 'HarperCollins', '195 Broadway, New York', '212-207-7000', 'info@harpercollins.com'),
+('P003', 'Simon & Schuster', '1230 Avenue of the Americas, New York', '212-698-7000', 'info@simonandschuster.com'),
+('P004', 'Hachette Book Group', '1290 Avenue of the Americas, New York', '212-364-1200', 'info@hachettebookgroup.com'),
+('P005', 'Macmillan', '120 Broadway, New York', '646-307-5151', 'info@macmillan.com'),
+('P006', 'Scholastic', '557 Broadway, New York', '212-343-6100', 'info@scholastic.com'),
+('P007', 'Oxford University Press', '198 Madison Avenue, New York', '212-726-6000', 'info@oup.com'),
+('P008', 'Cambridge University Press', '1 Liberty Plaza, New York', '212-337-5000', 'info@cambridge.org'),
+('P009', 'Wiley', '111 River Street, Hoboken', '201-748-6000', 'info@wiley.com'),
+('P010', 'Pearson', '221 River Street, Hoboken', '201-236-7000', 'info@pearson.com');
+
+select * from publishers;
+
+-- borrowrecords table
+
+create table borrowrecords (
+    borrowid varchar(10) not null,
+    studentid varchar(10) not null,
+    bookid varchar(10) not null,
+    borrowdate date not null,
+    returndate date,
+    primary key (borrowid),
+    foreign key (studentid) references students(studentid),
+    foreign key(bookid) references books(bookid)
+);
+
+insert into borrowrecords (borrowid, studentid, bookid, borrowdate, returndate) values
+('B1', 'S1', 'B001', '2024-01-10', '2024-01-17'),
+('B2', 'S2', 'B002', '2024-01-11', '2024-01-18'),
+('B3', 'S3', 'B003', '2024-01-12', '2024-01-19'),
+('B4', 'S4', 'B004', '2024-01-13', '2024-01-20'),
+('B5', 'S5', 'B005', '2024-01-14', '2024-01-21'),
+('B6', 'S6', 'B006', '2024-01-15', '2024-01-22'),
+('B7', 'S7', 'B007', '2024-01-16', '2024-01-23'),
+('B8', 'S8', 'B008', '2024-01-17', '2024-01-24'),
+('B9', 'S9', 'B009', '2024-01-18', '2024-01-25'),
+('B10', 'S10', 'B010', '2024-01-19', '2024-01-26');
+
+select * from borrowrecords;
+
+-- bookcopies table
+
+create table bookcopies (
+    copyid varchar(10) not null,
+    bookid varchar(10) not null,
+    librarylocation varchar(50) not null,
+    availabilitystatus varchar(10) not null,
+    primary key (copyid),
+    foreign key (bookid) references books(bookid)
+);
+
+insert into bookcopies (copyid, bookid, librarylocation, availabilitystatus) values
+('BC001', 'B001', 'Shelf A1', 'Available'),
+('BC002', 'B001', 'Shelf A1', 'Borrowed'),
+('BC003', 'B002', 'Shelf B1', 'Available'),
+('BC004', 'B003', 'Shelf C1', 'Available'),
+('BC005', 'B004', 'Shelf D1', 'Borrowed'),
+('BC006', 'B005', 'Shelf E1', 'Available'),
+('BC007', 'B006', 'Shelf F1', 'Available'),
+('BC008', 'B007', 'Shelf G1', 'Borrowed'),
+('BC009', 'B008', 'Shelf H1', 'Available'),
+('BC010', 'B009', 'Shelf I1', 'Borrowed');
+
+select * from bookcopies;
+
+select students.studentid, students.name, borrowrecords.bookid, borrowrecords.borrowdate
+from students
+join borrowrecords on students.studentid = borrowrecords.studentid;
+
+select borrowrecords.borrowid,students.studentid,students.name AS studentname,
+books.bookid,books.title AS booktitle,borrowrecords.borrowdate,borrowrecords.returndate
+from borrowrecords
+join students on borrowrecords.studentid = students.studentid
+join books on borrowrecords.bookid = books.bookid;
+
+select students.studentid,students.name AS studentname,borrowrecords.borrowid,
+bookcopies.copyid,books.title AS booktitle,borrowrecords.borrowdate,borrowrecords.returndate
+from students
+join borrowrecords on students.studentid = borrowrecords.studentid
+join bookcopies on borrowrecords.bookid = bookcopies.bookid
+join books on bookcopies.bookid = books.bookid;
